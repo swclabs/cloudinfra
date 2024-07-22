@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+
+# Function to display help
+show_help() {
+    echo "Usage: $(basename $0) [options]"
+    echo
+    echo "Options:"
+    echo "  -h, --help        Show this help message and exit"
+    echo "  -g, --greet NAME  Display a greeting message to NAME"
+    echo
+}
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -g|--greet)
+            if [[ -n "$2" ]]; then
+                NAME="$2"
+                shift
+            else
+                echo "Error: --greet requires a NAME argument" >&2
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Unknown option: $1" >&2
+            show_help
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+# Main script logic
+if [[ -n "$NAME" ]]; then
+    echo "Hello, $NAME!"
+fi
